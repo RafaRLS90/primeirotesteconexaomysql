@@ -12,11 +12,12 @@ public class TestaListagem {
 		Connection connection = DriverManager
 				.getConnection("jdbc:mysql://localhost/loja_virtual?useTimezone=true&serverTimezone=UTC", "root", "rafadev1990java");
 			
-				Statement stm = connection.createStatement();
-				stm.execute("SELECT ID, NOME, DESCRICAO FROM PRODUTO");
+				Statement stm = connection.createStatement();//Faz comandos do mysql, para modificar banco de dados
+				stm.execute("SELECT ID, NOME, DESCRICAO FROM PRODUTO");//executando banco de dados
 				
-				ResultSet rst = stm.getResultSet();
+				ResultSet rst = stm.getResultSet();//trazendo resultados do banco
 				
+				//while fara a busca e trará os itens
 				while (rst.next()) {
 					Integer id = rst.getInt("ID");
 					System.out.println(id);
