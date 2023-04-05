@@ -7,8 +7,8 @@ public class TestaConexao {
 
 	public static void main(String[] args) throws SQLException {
 		
-		CriarConexao criaConexao = new CriarConexao();
-		Connection connection = criaConexao.recuperarConexao();
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		Connection connection = connectionFactory.recuperarConexao();
 		
 		//"jdbc:mysql://localhost:3306/loja_virtual?useTimezone=true&serverTimezone=UTC", "root"
 		System.out.println("Fechando a conexão!");

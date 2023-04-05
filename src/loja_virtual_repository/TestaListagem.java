@@ -9,8 +9,8 @@ public class TestaListagem {
 
 	public static void main(String[] args) throws SQLException {
 		
-				CriarConexao criaConexao = new CriarConexao();
-				Connection connection = criaConexao.recuperarConexao();
+				ConnectionFactory connectionFactory = new ConnectionFactory();
+				Connection connection = connectionFactory.recuperarConexao();
 		
 				Statement stm = connection.createStatement();//Faz comandos do mysql, para modificar banco de dados
 				stm.execute("SELECT ID, NOME, DESCRICAO FROM PRODUTO");//executando banco de dados
