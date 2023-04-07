@@ -14,29 +14,28 @@ import javax.management.RuntimeErrorException;
 	public static void main(String[] args) throws SQLException {
 		
 		ConnectionFactory factory = new ConnectionFactory();
-		Connection connection = factory.recuperarConexao();	
+		try(Connection connection = factory.recuperarConexao()){	
 		
 		connection.setAutoCommit(false);
 		
-		try {
-			PreparedStatement stm = 
-					connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (? , ?)" , Statement.RETURN_GENERATED_KEYS);
+		try(PreparedStatement stm = 
+				connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (? , ?)" , Statement.RETURN_GENERATED_KEYS);
+				) {
 					
 					adicionarVariavel("Smart TV", "Toshiba", stm);
 					adicionarVariavel("Radio", "Multilaser", stm);
 					
 					connection.commit();
 					
-					stm.close();
-					connection.close();
+					
 		} catch (Exception e){
 			e.printStackTrace();
 			System.out.println("ROLLBACK EXECUTADO");
 			connection.rollback();//O rollback serve para fazer justamente o contrário do
 			//commit, ou seja, ele desfaz as alterações que você fez no banco 
 		}
-		
 	}
+}
 
 	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
 		stm.setString(1,nome);
@@ -49,12 +48,12 @@ import javax.management.RuntimeErrorException;
 		
 		stm.execute();
 		
-		ResultSet rst = stm.getGeneratedKeys();
+		try(ResultSet rst = stm.getGeneratedKeys()){
 		while(rst.next()) {
 			Integer id = rst.getInt(1);
 			System.out.println("o id criado foi: " + id);
 	
+		    }
 		}
-		rst.close();
 	}
 }
