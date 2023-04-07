@@ -8,19 +8,31 @@ import java.sql.Statement;
 
 
 
-public class TestaInsercaoComParametro {
+    public class TestaInsercaoComParametro {
 	public static void main(String[] args) throws SQLException {
-		String nome = "Mouse'";
-		String descricao = "Mouse sem fio. Bugado";
 		
 		ConnectionFactory factory = new ConnectionFactory();
 		Connection connection = factory.recuperarConexao();	
 		
-		PreparedStatement stm = 
-		connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (? , ?)" , Statement.RETURN_GENERATED_KEYS);
+		connection.setAutoCommit(false);
 		
-		adicionarVariavel("Smart TV", "Toshiba", stm);
-		adicionarVariavel("Radio", "Multilaser", stm);
+		try {
+			PreparedStatement stm = 
+					connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (? , ?)" , Statement.RETURN_GENERATED_KEYS);
+					
+					adicionarVariavel("Smart TV", "Toshiba", stm);
+					adicionarVariavel("Radio", "Multilaser", stm);
+					
+					connection.commit();
+					
+					stm.close();
+					connection.close();
+		} catch (Exception e){
+			e.printStackTrace();
+			System.out.println("ROLLBACK EXECUTADO");
+			connection.rollback();
+		}
+		
 	}
 
 	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
