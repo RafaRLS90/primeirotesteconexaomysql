@@ -15,6 +15,9 @@ public class ConnectionFactory {
 		comboPoolDataSource.setUser("root");
 		comboPoolDataSource.setPassword("rafadev1990java");
 		
+		comboPoolDataSource.setMaxPoolSize(15);
+		//Numero máximo de conexões estabelecido
+		
 		this.dataSource = comboPoolDataSource;
 	}
 	
