@@ -1,6 +1,6 @@
 package loja_virtual_repository;
 
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +12,8 @@ public class TestaListagem {
 				ConnectionFactory connectionFactory = new ConnectionFactory();
 				Connection connection = connectionFactory.recuperarConexao();
 		
-				Statement stm = connection.createStatement();//Faz comandos do mysql, para modificar banco de dados
-				stm.execute("SELECT ID, NOME, DESCRICAO FROM PRODUTO");//executando banco de dados
+				PreparedStatement stm = connection.prepareStatement("SELECT ID, NOME, DESCRICAO FROM PRODUTO");//Faz comandos do mysql, para modificar banco de dados
+				stm.execute();//executando banco de dados
 				
 				ResultSet rst = stm.getResultSet();//trazendo resultados do banco
 				
