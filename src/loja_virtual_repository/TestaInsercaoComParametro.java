@@ -19,6 +19,11 @@ public class TestaInsercaoComParametro {
 		PreparedStatement stm = 
 		connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (? , ?)" , Statement.RETURN_GENERATED_KEYS);
 		
+		adicionarVariavel("Smart TV", "Toshiba", stm);
+		adicionarVariavel("Radio", "Multilaser", stm);
+	}
+
+	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
 		stm.setString(1,nome);
 		stm.setString(2, descricao);
 		
@@ -30,5 +35,6 @@ public class TestaInsercaoComParametro {
 			System.out.println("o id criado foi: " + id);
 	
 		}
+		rst.close();
 	}
 }
