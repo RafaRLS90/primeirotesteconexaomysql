@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.management.RuntimeErrorException;
+
 
 
     public class TestaInsercaoComParametro {
@@ -30,7 +32,8 @@ import java.sql.Statement;
 		} catch (Exception e){
 			e.printStackTrace();
 			System.out.println("ROLLBACK EXECUTADO");
-			connection.rollback();
+			connection.rollback();//O rollback serve para fazer justamente o contrário do
+			//commit, ou seja, ele desfaz as alterações que você fez no banco 
 		}
 		
 	}
@@ -38,6 +41,11 @@ import java.sql.Statement;
 	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
 		stm.setString(1,nome);
 		stm.setString(2, descricao);
+		
+		if(nome.equals(";")) {
+			throw new RuntimeException("Não foi possível adicionar o produto");
+		}
+		
 		
 		stm.execute();
 		
